@@ -4,9 +4,9 @@ import produce from "immer";
 import { useImmer } from "use-immer";
 
 enum Company {
-  DOUBLED,
-  SINGLED,
-  TRIPLED,
+  COMPANY_ONE,
+  COMPANY_TWO,
+  COMPANY_THREE,
 }
 
 type Account = {
@@ -23,28 +23,28 @@ export const dupes: Dupe[] = [
   {
     resolveTo: {
       name: "Acme Inc",
-      company: Company.DOUBLED,
+      company: Company.COMPANY_ONE,
     },
     dupes: [
       {
         name: "Acme Global",
-        company: Company.SINGLED,
+        company: Company.COMPANY_TWO,
       },
       {
         name: "Acme LLC",
-        company: Company.TRIPLED,
+        company: Company.COMPANY_THREE,
       },
     ],
   },
   {
     resolveTo: {
       name: "CCL Worldwide",
-      company: Company.TRIPLED,
+      company: Company.COMPANY_THREE,
     },
     dupes: [
       {
         name: "Heroes Hearth Tourney",
-        company: Company.DOUBLED,
+        company: Company.COMPANY_ONE,
       },
     ],
   },
@@ -56,7 +56,7 @@ type DupeProps = {
 
 const defaultAccount = {
   name: "",
-  company: Company.DOUBLED,
+  company: Company.COMPANY_ONE,
 };
 
 const defaultDupe = {
@@ -115,16 +115,16 @@ const DupeManager: React.FC<DupeProps> = ({ dupes }) => {
               }
             />
             <Select
-              defaultValue={Company.DOUBLED}
+              defaultValue={Company.COMPANY_ONE}
               onChange={(v) =>
                 setAddingDupe((draft) => {
                   draft.resolveTo.company = v;
                 })
               }
             >
-              <Select.Option value={Company.SINGLED}>Single D</Select.Option>
-              <Select.Option value={Company.DOUBLED}>Double D</Select.Option>
-              <Select.Option value={Company.TRIPLED}>Triple D</Select.Option>
+              <Select.Option value={Company.COMPANY_ONE}>Company one</Select.Option>
+              <Select.Option value={Company.COMPANY_TWO}>Company two</Select.Option>
+              <Select.Option value={Company.COMPANY_THREE}>Company three</Select.Option>
             </Select>
 
             <h4>These dupes</h4>
@@ -142,16 +142,16 @@ const DupeManager: React.FC<DupeProps> = ({ dupes }) => {
               }
             />
             <Select
-              defaultValue={Company.DOUBLED}
+              defaultValue={Company.COMPANY_ONE}
               onChange={(v) =>
                 setSavingLineItem((draft) => {
                   draft.company = v;
                 })
               }
             >
-              <Select.Option value={Company.SINGLED}>Single D</Select.Option>
-              <Select.Option value={Company.DOUBLED}>Double D</Select.Option>
-              <Select.Option value={Company.TRIPLED}>Triple D</Select.Option>
+              <Select.Option value={Company.COMPANY_ONE}>Company one</Select.Option>
+              <Select.Option value={Company.COMPANY_TWO}>Company two</Select.Option>
+              <Select.Option value={Company.COMPANY_THREE}>Company three</Select.Option>
             </Select>
             <Button
               onClick={() => {
@@ -177,6 +177,8 @@ const DupeManager: React.FC<DupeProps> = ({ dupes }) => {
                 });
                 setSavingLineItem((_) => defaultAccount);
                 setAddingDupe((_) => defaultDupe);
+                setSavingLineItem((_) => defaultAccount);
+                setSavingLineItems((_) => []);
                 setShowAddNewSection(false);
               }}
             >
